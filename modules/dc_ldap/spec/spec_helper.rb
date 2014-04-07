@@ -1,31 +1,12 @@
-require 'rake'
-require 'rspec/core/rake_task'
-require 'puppetlabs_spec_helper/rake_tasks'
+require 'rspec-puppet'
+require 'rspec-puppet-utils'
+require 'puppetlabs_spec_helper/module_spec_helper'
 
-desc "Run all RSpec code examples"
-RSpec::Core::RakeTask.new(:rspec) do |t|
-  t.rspec_opts = File.exists?('spec/spec.opts') ? File.read('spec/spec.opts').chomp : ''
-  t.color = true
-end
-task :default => :rspec
+fixture_path = File.expand_path(File.join(__FILE__, '..', 'fixtures'))
 
-SPEC_SUITES = (Dir.entries('spec') - ['.', '..','fixtures']).select {|e| File.directory? "spec/#{e}" }
-namespace :rspec do
-  SPEC_SUITES.each do |suite|
-    desc "Run #{suite} RSpec code examples"
-    RSpec::Core::RakeTask.new(suite) do |t|
-      t.pattern = "spec/#{suite}/**/*_spec.rb"
-      t.rspec_opts = File.exists?('spec/spec.opts') ? File.read('spec/spec.opts').chomp : ''
-      t.color = true
-    end
-  end
-end
-
-begin
-  if Gem::Specification::find_by_name('puppet-lint')
-    require 'puppet-lint/tasks/puppet-lint'
-    PuppetLint.configuration.ignore_paths = ["spec/**/*.pp", "vendor/**/*.pp"]
-    task :default => [:rspec, :lint]
-  end
-rescue Gem::LoadError
+RSpec.configure do |c|
+  c.config = '/doesnotexist'
+  c.module_path = File.join(fixture_path, 'modules')
+  c.manifest_dir = File.join(fixture_path, 'manifests')
+  c.color = true
 end
