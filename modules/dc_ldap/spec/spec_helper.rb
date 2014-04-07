@@ -10,3 +10,5 @@ RSpec.configure do |c|
   c.manifest_dir = File.join(fixture_path, 'manifests')
   c.color = true
 end
+
+puts File.join(fixture_path, 'modules')

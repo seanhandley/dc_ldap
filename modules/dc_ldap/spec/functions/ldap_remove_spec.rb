@@ -1,11 +1,9 @@
-# require 'puppet'
+require 'spec_helper'
 
-# module Puppet::Parser::Functions
-#   scope = Puppet::Parser::Scope.new
+describe "ldapadd function" do
+  let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
 
-#   describe function(:ldapremove) do
-#     it "should ..." do
-#       scope.function_ldapremove().should == "something"
-#     end
-#   end
-# end
+  it "should return hello" do
+    scope.function_ldap_remove([]).should == "hello"
+  end
+end

@@ -1,11 +1,9 @@
-# require 'puppet'
+require 'spec_helper'
 
-# module Puppet::Parser::Functions
-#   scope = Puppet::Parser::Scope.new
+describe "ldapadd function" do
+  let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
 
-#   describe function(:ldapmodify) do
-#     it "should ..." do
-#       scope.function_ldapmodify().should == "something"
-#     end
-#   end
-# end
+  it "should return hello" do
+    scope.function_ldap_modify([]).should == "hello"
+  end
+end
