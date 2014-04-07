@@ -6,3 +6,4 @@ gem "puppet-lint"
 gem "rspec-puppet", '~> 1.0.0'
 gem "puppetlabs_spec_helper"
 gem "puppet-syntax"
+gem 'net-ldap'

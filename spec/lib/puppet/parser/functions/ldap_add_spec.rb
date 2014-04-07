@@ -1,6 +1,5 @@
 require 'puppet'
 require 'spec_helper'
-require_relative '../../../../../lib/puppet/parser/functions/ldap_add'
 
 module Puppet::Parser::Functions
   describe "machinelist2 function" do

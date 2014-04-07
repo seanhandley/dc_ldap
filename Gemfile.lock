@@ -9,6 +9,7 @@ GEM
     metaclass (0.0.4)
     mocha (1.0.0)
       metaclass (~> 0.0.1)
+    net-ldap (0.5.1)
     puppet (3.2.4)
       facter (~> 1.6)
       hiera (~> 1.0)
@@ -39,6 +40,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  net-ldap
   puppet (~> 3.2.0)
   puppet-lint
   puppet-syntax

@@ -13,6 +13,7 @@ module Puppet::Parser::Functions
 
     ENDHEREDOC
 
+    STDERR.puts "HERP"
     "hello"
   end
 end
