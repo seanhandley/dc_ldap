@@ -1,23 +1,11 @@
 module LDAPHelper
 
-  def org_unit
-    "People"
-  end
-
-  def dc
-    ["datacentred","co","uk"]  
-  end
-  
-  def object_classes
-    ["top", "person", "inetorgPerson"]
-  end
-
-  def full_username(uid)
-    "uid=#{uid},ou=#{org_unit},#{dc_string}"
-  end
-
-  def dc_string
-    dc.map{|e| "dc=#{e}"}.join ','
+  def ldap(args)
+    host, port, admin_user, admin_password, _ = args
+    ldap = Net::LDAP.new(:host => host, :port => port, :method => :simple,
+                          :username => admin_user, :password => admin_password)
+    ldap.bind
+    ldap
   end
   
 end

@@ -1,23 +1,27 @@
 
 require 'spec_helper'
 
-describe "ldapadd function" do
+describe "ldap_add function" do
+  include LDAPSetup
+
 	let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
 
   before(:each) do
-    @ldap_entry = {username: 'testy_test', password: 'llama123',
-               first_name: 'Testy', last_name: 'Tester',
-               email: 'testy@test.com'}
-    @server_details = ["127.0.0.1", 8389, 'admin', 'Qqb8QC_wBeK!gch']
+    ldap_setup
+    @ldap_entry = {:dn => 'uid=testy_test,ou=People,dc=datacentred,dc=co,dc=uk',
+                   :attributes => {
+                     :cn => 'Testy Tester', :givenName => 'Testy',
+                     :objectClass => ['top', 'person', 'inetorgPerson'],
+                     :sn => 'Tester', :mail => 'testy@test.com', 
+                     :uid => 'testy_test',
+                     :userPassword => '{SHA}6d3L1UCJtULYvBnp47aqAvjtfM8='}}
     @params = @server_details.push(@ldap_entry)
-    host, port, username, password = @server_details
-    ldap_params = {host: host, username: username, password: password, port: port, method: :simple}
-    @mock_ldap = mock(bind: true)
-    @mock_ldap.expects(:add).returns(true)
-    Net::LDAP.expects(:new).with(ldap_params).returns(@mock_ldap)
   end
 
-	it "should return hello" do
-	  scope.function_ldap_add(@params).should == true
-	end
+  [true, false].each do |bool|
+  	it "should react to success" do
+      @mock_ldap.expects(:add).with(@ldap_entry).returns(bool)
+      scope.function_ldap_add(@params).should == bool
+  	end
+  end
 end
