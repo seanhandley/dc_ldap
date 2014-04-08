@@ -7,5 +7,14 @@ module LDAPHelper
     ldap.bind
     ldap
   end
+
+  def params(args)
+    args[4]
+  end
+
+  def return_code_and_message(ldap)
+    result = ldap.get_operation_result
+    return result.code, result.message
+  end
   
 end

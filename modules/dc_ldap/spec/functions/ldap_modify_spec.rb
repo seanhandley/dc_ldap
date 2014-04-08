@@ -12,10 +12,10 @@ describe "ldap_modify function" do
     @params = @server_details.push(@ldap_entry)
   end
 
-  [true, false].each do |bool|
-    it "should react to success" do
-      @mock_ldap.expects(:modify).with(@ldap_entry).returns(bool)
-      scope.function_ldap_modify(@params).should == bool
-    end
+  it "should return a code and message" do
+    @mock_ldap.expects(:modify).with(@ldap_entry)
+    code, message = scope.function_ldap_modify(@params)
+    code.should == 0
+    message.should == "success"
   end
 end

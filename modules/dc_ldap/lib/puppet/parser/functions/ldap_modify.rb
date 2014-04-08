@@ -4,6 +4,8 @@ require 'net/ldap'
 module Puppet::Parser::Functions
   newfunction(:ldap_modify, :type => :rvalue) do |args|
     extend LDAPHelper
-    ldap(args).modify(args[4])
+    ldap = ldap(args)
+    ldap.modify(params(args))
+    return_code_and_message(ldap)
   end
 end

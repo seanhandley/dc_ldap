@@ -18,10 +18,10 @@ describe "ldap_add function" do
     @params = @server_details.push(@ldap_entry)
   end
 
-  [true, false].each do |bool|
-  	it "should react to success" do
-      @mock_ldap.expects(:add).with(@ldap_entry).returns(bool)
-      scope.function_ldap_add(@params).should == bool
-  	end
-  end
+	it "should return a code and message" do
+    @mock_ldap.expects(:add).with(@ldap_entry)
+    code, message = scope.function_ldap_add(@params)
+    code.should == 0
+    message.should == "success"
+	end
 end

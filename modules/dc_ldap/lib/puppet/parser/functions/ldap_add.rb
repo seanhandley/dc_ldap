@@ -4,6 +4,8 @@ require 'net/ldap'
 module Puppet::Parser::Functions
   newfunction(:ldap_add, :type => :rvalue) do |args|
     extend LDAPHelper
-    ldap(args).add(args[4])
+    ldap = ldap(args)
+    ldap.add(params(args))
+    return_code_and_message(ldap)
   end
 end

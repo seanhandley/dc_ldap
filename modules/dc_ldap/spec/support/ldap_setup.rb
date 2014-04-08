@@ -4,6 +4,7 @@ module LDAPSetup
     host, port, username, password = @server_details
     ldap_params = {host: host, username: username, password: password, port: port, method: :simple}
     @mock_ldap = mock(bind: true)
+    @mock_ldap.expects(:get_operation_result).returns(mock(code: 0, message: "success"))
     Net::LDAP.expects(:new).with(ldap_params).returns(@mock_ldap)
   end
 end
